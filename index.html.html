@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주간 소식지</title>
+  <style>
+    body { font-family: sans-serif; background: #f7f9fa; margin: 0; padding: 20px; }
+    .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    h1 { color: #1a73e8; font-size: 1.5rem; text-align: center; }
+    h2 { color: #333; font-size: 1.2rem; margin-bottom: 10px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 8px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h1 id="title">로딩중...</h1>
+  <p style="text-align:center; color:#555;" id="date"></p>
+
+  <div class="card">
+    <h2>📌 이번 주 주요 소식</h2>
+    <p id="main-news"></p>
+  </div>
+
+  <div class="card">
+    <h2>📋 공지사항</h2>
+    <ul id="notice-list"></ul>
+  </div>
+
+  <script>
+    // data.json 파일을 불러와서 화면의 빈 곳을 채워주는 코드
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('title').innerText = data.title;
+        document.getElementById('date').innerText = data.date;
+        document.getElementById('main-news').innerText = data.mainNews;
+
+        const noticeUl = document.getElementById('notice-list');
+        data.notices.forEach(notice => {
+          const li = document.createElement('li');
+          li.innerText = notice;
+          noticeUl.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>
